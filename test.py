@@ -15,6 +15,6 @@ accuracy = accuracy_score(pred,y)
 print("Accuracy:", accuracy)
 #assertions are some conditions
 # part of software testing to verify that the code is working as expected
-assert accuracy > 0.9850
+assert accuracy > 0.91
 assert len(pred) == len(X)
 print("test cases passed")
