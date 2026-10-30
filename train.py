@@ -4,8 +4,11 @@ import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from pathlib import Path
 
-df = pd.read_csv("D:\\EXP_8_ML\\Iris.csv")
+BASE_DIR = Path(__file__).resolve().parent
+
+df = pd.read_csv(BASE_DIR / 'Iris.csv')
 df = df.drop("Id", axis=1)
 
 X = df.drop("Species", axis=1)
@@ -23,5 +26,5 @@ accuracy = accuracy_score(y_test, y_pred)
 
 print(f"Accuracy of the model: {accuracy:.2f}")
 
-joblib.dump(model, "model.pkl")
+joblib.dump(model, BASE_DIR / "model.pkl")
 print("Model saved successfully")
