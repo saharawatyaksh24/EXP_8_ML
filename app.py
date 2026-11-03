@@ -8,7 +8,7 @@ model = joblib.load("model.pkl")
 
 @app.route("/")
 def home():
-    return jsonify({"message": "Welcome to the Iris Species Prediction API!"})
+    return jsonify({"message": "Prediction APi working on updated pipeline"})
 
 @app.route("/predict", methods=["POST"])
 def predict():
