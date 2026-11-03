@@ -8,7 +8,7 @@ model = joblib.load("model.pkl")
 
 @app.route("/")
 def home():
-    return jsonify({"message": "Prediction APi working on updated pipeline"})
+    return jsonify({"message": "Prediction API is updated"})
 
 @app.route("/predict", methods=["POST"])
 def predict():
