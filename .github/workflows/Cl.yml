@@ -1,32 +1,35 @@
-  name : ML CI/CD Pipeline
 
-  on:
-    push:
-      branches: [main]
-    workflow_dispatch:
+name: ML CI/CD Pipeline
 
-  jobs:
-    train-and-test:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Download project code
-          uses: actions/checkout@v4
-        - name: Setup Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.11"
-        - name: Install libraries
-          run: pip install -r requirements.txt
-        - name: train ML model
-          run: python train.py
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
 
-        - name: Test ML model
-          run: python test.py
+jobs:
+  train-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Download project code
+        uses: actions/checkout@v4
 
-        - name: Deployment 
-          if: success() && github.ref == 'refs/heads/main'
-         env: 
-           DEPLOY_HOOK_URL: ${{RENDER_DEPLOY_HOOK_URL}}
-         run: curl --fail --silent --show-error "$DEPLOY_HOOK_URL"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-  
+      - name: Install libraries
+        run: pip install -r requirements.txt
+
+      - name: Train ML model
+        run: python train.py
+
+      - name: Test ML model
+        run: python test.py
+
+      - name: Deployment
+        if: success() && github.ref == 'refs/heads/main'
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl --fail --silent --show-error "$DEPLOY_HOOK_URL"
